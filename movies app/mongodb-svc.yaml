@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb  # Service name
+  labels:  # Labels section (if applicable)
+    app: mongodb  # Example label
+spec:
+  clusterIP: None  # Service type
+  selector:
+    app: mongodb  # Selector to match pods
+  ports:
+  - port: 27017
+    targetPort: 27017

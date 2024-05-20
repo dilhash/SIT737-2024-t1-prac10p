@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: movies-app
+  template:
+    metadata:
+      labels:
+        app: movies-app
+    spec:
+      containers:
+      - name: movies-app
+        image: australia-southeast1-docker.pkg.dev/sit737-24t1-balaarachc-6fa630b/sit737-assignments/movie-app-image:latest
+        ports:
+        - containerPort: 3000

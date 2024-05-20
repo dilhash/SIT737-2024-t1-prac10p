@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongodb-backup
+spec:
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: backup
+        image: mongo:4.0.17
+        command: ["mongodump", "--host", "mongodb", "--out", "/backup"]
+        volumeMounts:
+        - mountPath: /backup
+          name: backup-volume
+      restartPolicy: Never
+      volumes:
+      - name: backup-volume
+        emptyDir: {}
+  backoffLimit: 4

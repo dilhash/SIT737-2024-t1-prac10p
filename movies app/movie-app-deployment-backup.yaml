@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: movies-app
+  template:
+    metadata:
+      labels:
+        app: movies-app
+    spec:
+      containers:
+      - name: movies-app
+        image: australia-southeast1-docker.pkg.dev/sit737-24t1-balaarachc-6fa630b/sit737-assignments/movie-app-101-image:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGO_URI
+          value: "mongodb://$(USERNAME):$(PASSWORD)@mongodb:27017/sample_mflix"
+        envFrom:
+        - secretRef:
+            name: mongodb-credentials
+      volumes:
+      - name: mongodb-credentials
+        secret:
+          secretName: mongodb-credentials
